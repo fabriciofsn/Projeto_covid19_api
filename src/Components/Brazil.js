@@ -40,52 +40,62 @@ const DivElement = styled.div`
 `;
 
 const Brazil = ({ data }) => {
-  let [totalDeaths, setTotalDeaths] = React.useState(0);
-  let [totalConfirmed, setTotalConfirmed] = React.useState(0);
-  let [suspect, setSuspect] = React.useState(0);
+  const [info, setInfo] = React.useState([
+    {
+      label: "totalDeaths",
+      prop: "deaths",
+      total: 0,
+      name: "Total de Mortes",
+      icon: <FaSkullCrossbones style={{ color: "red" }} />,
+    },
+    {
+      label: "totalConfirmed",
+      prop: "cases",
+      total: 0,
+      name: "Confirmados",
+      icon: <ImCheckboxChecked style={{ color: "green", fontSize: "1rem" }} />,
+    },
+    {
+      label: "suspect",
+      prop: "suspects",
+      total: 0,
+      name: "Suspeitos",
+      icon: <AiFillWarning style={{ color: "yellow", fontSize: "1.2rem" }} />,
+    },
+  ]);
+
+  function handleInfo(prop) {
+    const infoTarget = data.data.reduce((acc, item) => {
+      return acc + item[prop];
+    }, 0);
+
+    setInfo((prev) => {
+      return prev.map((item) => {
+        if (item.prop === prop) {
+          return { ...item, total: infoTarget };
+        }
+        return item;
+      });
+    });
+  }
 
   React.useEffect(() => {
-    let totalDeath = data.data.reduce((acc, deaths) => {
-      return acc + deaths.deaths;
-    }, 0);
-    setTotalDeaths(totalDeath);
-  }, []);
-
-  React.useEffect(() => {
-    let totalCases = data.data.reduce((acc, cases) => {
-      return acc + cases.cases;
-    }, 0);
-    setTotalConfirmed(totalCases);
-  }, []);
-
-  React.useEffect(() => {
-    let suspects = data.data.reduce((acc, suspect) => {
-      return acc + suspect.suspects;
-    }, 0);
-
-    setSuspect(suspects);
+    info.forEach((item) => {
+      handleInfo(item.prop);
+    });
   }, []);
 
   return (
     <DivAnim>
       <h2 style={{ color: "white" }}>Status Geral No Brasil</h2>
       <DivElement>
-        <div>
-          <p>
-            <ImCheckboxChecked style={{ color: "green", fontSize: "1rem" }} />{" "}
-            Confirmados: {totalConfirmed.toLocaleString()}
-          </p>
-        </div>
-        <div>
-          <p>
-            <AiFillWarning style={{ color: "yellow", fontSize: "1.2rem" }} />
-            Suspeitos: {suspect.toLocaleString()}
-          </p>
-        </div>
-        <p className="after">
-          <FaSkullCrossbones style={{ color: "red" }} /> Total de Mortes:{" "}
-          {totalDeaths.toLocaleString()}
-        </p>
+        {info.map((item) => (
+          <div key={item.label}>
+            <p>
+              {item.icon} {item.name}: {item.total.toLocaleString()}
+            </p>
+          </div>
+        ))}
       </DivElement>
     </DivAnim>
   );

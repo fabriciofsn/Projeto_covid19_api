@@ -54,7 +54,7 @@ const ShowDetails = ({ response }) => {
   return (
     <div>
       {state.data.map(({ uf, state, cases, deaths, suspects, datetime }) => {
-        if (select == uf) {
+        if (select === uf) {
           return (
             <ShowInfos key={uf}>
               <p>

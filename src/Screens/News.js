@@ -1,24 +1,20 @@
 import React from "react";
-import styled, { keyframes } from "styled-components";
-import UseLoading from "../Components/UseLoading";
+import styled from "styled-components";
 import spin from "../assets/Eclipse-1s-200px.svg";
+import useFetch from "../hooks/useFetch";
 
 const News = () => {
   const [response, setResponse] = React.useState([]);
-  const [isLoading, startLoading, stopLoading] = UseLoading();
+  const { request, isLoading } = useFetch(
+    "https://newsapi.org/v2/everything?q=covid&apiKey=ec27a2025d6247cbbc9a229dc9b23a22&language=pt"
+  );
 
   React.useEffect(() => {
-    startLoading();
-    const newsfetch = async () => {
-      const news = await fetch(
-        "https://newsapi.org/v2/everything?q=covid&apiKey=ec27a2025d6247cbbc9a229dc9b23a22&language=pt"
-      );
-      const responseJson = await news.json();
-      setResponse(responseJson);
-      stopLoading();
-    };
-    newsfetch();
+    request().then(({ data }) => {
+      setResponse(data);
+    });
   }, []);
+
   const { articles } = response;
 
   return (
@@ -27,7 +23,7 @@ const News = () => {
         {isLoading && <img src={spin} alt="loader" />}
         {articles &&
           articles.map((article, index) => {
-            if (article.source.name == "Observador.pt") {
+            if (article.source.name === "Observador.pt") {
               return (
                 <div key={index}>
                   <h1>{article.title}</h1>
@@ -40,6 +36,7 @@ const News = () => {
                       target="_blank"
                       style={{ color: "#0d6efd" }}
                       href={article.url}
+                      rel="noreferrer"
                     >
                       {" "}
                       Matéria Completa
@@ -47,6 +44,8 @@ const News = () => {
                   </p>
                 </div>
               );
+            } else {
+              return null;
             }
           })}
         {articles &&
@@ -69,6 +68,7 @@ const News = () => {
                       target="_blank"
                       style={{ color: "#0d6efd" }}
                       href={article.url}
+                      rel="noreferrer"
                     >
                       {" "}
                       Matéria Completa

@@ -1,26 +1,20 @@
 import React from "react";
 import styled from "styled-components";
-import ShowDetails from "./ShowDetails";
-import UseLoading from "./UseLoading";
+import ShowDetails from "../Components/ShowDetails";
 import spin from "../assets/Eclipse-1s-200px.svg";
+import useFetch from "../hooks/useFetch";
 
 const Search = () => {
   const [select, setSelect] = React.useState("");
   const [state, setState] = React.useState("");
-  const [isLoading, startLoading, stopLoading] = UseLoading();
+  const { request, isLoading } = useFetch(
+    "https://covid19-brazil-api.now.sh/api/report/v1"
+  );
 
   React.useEffect(() => {
-    startLoading();
-    const states = async () => {
-      const state = await fetch(
-        "https://covid19-brazil-api.now.sh/api/report/v1"
-      );
-
-      const statesUf = await state.json();
-      setState(statesUf);
-      stopLoading();
-    };
-    states();
+    request().then(({ data }) => {
+      setState(data);
+    });
   }, []);
 
   const handleChange = ({ target }) => {

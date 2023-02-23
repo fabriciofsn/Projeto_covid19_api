@@ -1,9 +1,9 @@
 import React from "react";
 import styled from "styled-components";
-import Brazil from "./Brazil";
-import Status from "./Status";
+import Brazil from "../Components/Brazil";
+import Status from "../Components/Status";
 import spin from "../assets/Eclipse-1s-200px.svg";
-import UseLoading from "./UseLoading";
+import useFetch from "../hooks/useFetch";
 
 const SectionElement = styled.section`
   display: flex;
@@ -29,19 +29,14 @@ const DivLoader = styled.div`
 
 const Data = () => {
   const [response, setResponse] = React.useState();
-  const [isLoading, startLoading, stopLoading] = UseLoading();
+  const { isLoading, request } = useFetch(
+    "https://covid19-brazil-api.now.sh/api/report/v1"
+  );
 
   React.useEffect(() => {
-    startLoading();
-    const dataCovidRealTime = async () => {
-      const dataCovid = await fetch(
-        `https://covid19-brazil-api.now.sh/api/report/v1`
-      );
-      const responseCovid = await dataCovid.json();
-      setResponse(responseCovid);
-      stopLoading();
-    };
-    dataCovidRealTime();
+    request().then(({ data }) => {
+      setResponse(data);
+    });
   }, []);
 
   return (

@@ -1,10 +1,10 @@
 import React from "react";
 import Header from "./Components/Header";
-import Data from "./Components/Data";
+import Data from "./Screens/Data";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import Search from "./Components/Search";
-import News from "./Components/News";
-import Dev from "./Components/Dev";
+import Search from "./Screens/Search";
+import News from "./Screens/News";
+import Dev from "./Screens/Dev";
 
 const App = () => {
   return (
