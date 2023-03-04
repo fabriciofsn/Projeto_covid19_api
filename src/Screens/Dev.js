@@ -1,7 +1,18 @@
 import React from "react";
-import styled from "styled-components";
+import styled, { keyframes } from "styled-components";
 import { BsLinkedin, BsWhatsapp, BsGithub } from "react-icons/bs";
 import { FaDev } from "react-icons/fa";
+
+const animDiv = keyframes`
+  from{
+    transform: translate3d(-30px,0,0);
+    opacity: 0;
+  }
+  to{
+    transform: translate3d(0,0,0);
+    opacity: 1;
+  }
+`;
 
 const Dev = () => {
   return (
@@ -59,6 +70,7 @@ const Dev = () => {
 };
 
 const DivCenter = styled.div`
+  animation: ${animDiv} 0.5s ease;
   width: 100%;
   max-width: 400px;
   background-color: #1a1a1d;
