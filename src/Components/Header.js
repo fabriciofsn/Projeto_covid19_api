@@ -44,6 +44,11 @@ const DivTitle = styled.div`
 
 const DivLinks = styled.div`
   display: flex;
+
+  .pLink {
+    display: none;
+  }
+
   @media (max-width: 690px) {
     flex-direction: column;
     position: fixed;
@@ -61,6 +66,10 @@ const DivLinks = styled.div`
     .nav-link {
       line-height: 50px;
       padding: 1.5rem 0;
+    }
+
+    .pLink {
+      display: block;
     }
   }
 `;
@@ -93,7 +102,7 @@ const Header = () => {
         />
 
         <DivLinks ref={divLink} onClick={openModal}>
-          <p className="p-link">
+          <p className="pLink">
             <AiOutlineClose
               size={20}
               color="#0d6efd"
