@@ -1,8 +1,9 @@
-import React, { useRef } from "react";
+import React, { useEffect, useRef } from "react";
 import styled from "styled-components";
 import { MdOutlineCoronavirus } from "react-icons/md";
 import { NavLink } from "react-router-dom";
 import { FiMenu } from "react-icons/fi";
+import { AiOutlineClose } from "react-icons/ai";
 
 const H1 = styled.h1`
   color: white;
@@ -28,6 +29,7 @@ const DivElement = styled.div`
   }
 
   @media (max-width: 690px) {
+    width: 100%;
     .btn {
       display: initial;
     }
@@ -42,20 +44,23 @@ const DivTitle = styled.div`
 
 const DivLinks = styled.div`
   display: flex;
-
   @media (max-width: 690px) {
     flex-direction: column;
     position: fixed;
-    right: -150px;
+    width: 100%;
+    height: 0;
+    text-align: center;
+    right: 2px;
     overflow: hidden;
     transition: 0.3s;
-    top: 5rem;
+    top: 0;
     z-index: 99;
     background-color: #1a1a1d;
     border-radius: 5px;
 
     .nav-link {
       line-height: 50px;
+      padding: 1.5rem 0;
     }
   }
 `;
@@ -68,9 +73,9 @@ const Header = () => {
     setModal(!modal);
 
     if (modal) {
-      divLink.current.style.right = "0";
+      divLink.current.style.height = "100vh";
     } else {
-      divLink.current.style.right = "-150px";
+      divLink.current.style.height = "0";
     }
   };
 
@@ -88,11 +93,18 @@ const Header = () => {
         />
 
         <DivLinks ref={divLink} onClick={openModal}>
+          <p className="p-link">
+            <AiOutlineClose
+              size={20}
+              color="#0d6efd"
+              cursor="pointer"
+              onClick={openModal}
+            />
+          </p>
           <NavLink
             className="nav-link"
             style={{ margin: "0 5px", fontWeight: "600" }}
             to="/"
-            activeStyle={{ color: "#0d6efd" }}
             end
           >
             Home
@@ -101,7 +113,6 @@ const Header = () => {
             className="nav-link"
             to="search"
             style={{ margin: "0 5px", fontWeight: "600" }}
-            activeStyle={{ color: "#0d6efd" }}
           >
             Pesquisa Detalhada
           </NavLink>
@@ -109,7 +120,6 @@ const Header = () => {
             className="nav-link"
             to="noticias"
             style={{ margin: "0 5px", fontWeight: "600" }}
-            activeStyle={{ color: "#0d6efd" }}
           >
             Notícias
           </NavLink>
@@ -117,7 +127,6 @@ const Header = () => {
             className="nav-link"
             to="desenvolvedor"
             style={{ margin: "0 5px", fontWeight: "600" }}
-            activeStyle={{ color: "#0d6efd" }}
           >
             Dev
           </NavLink>

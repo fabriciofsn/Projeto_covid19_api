@@ -1,5 +1,5 @@
 {
-  "name": "correios",
+  "name": "covid_api",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
