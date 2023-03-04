@@ -125,13 +125,7 @@ const Header = () => {
           >
             Pesquisa Detalhada
           </NavLink>
-          <NavLink
-            className="nav-link"
-            to="noticias"
-            style={{ margin: "0 5px", fontWeight: "600" }}
-          >
-            Notícias
-          </NavLink>
+
           <NavLink
             className="nav-link"
             to="desenvolvedor"
